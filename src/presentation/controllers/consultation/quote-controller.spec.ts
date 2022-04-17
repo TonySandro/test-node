@@ -12,10 +12,10 @@ const makeSut = (): SutTypes => {
     }
 }
 
-describe('Quote Controller - Success case', () => {
+describe('Quote Controller', () => {
     test('Should return 200 on success', async () => {
         const { sut } = makeSut()
-        const httpResponse = await sut.handle({ data: "IBM" })
+        const httpResponse = await sut.handle({ data: { quoteName: "IBM" } })
 
         expect(httpResponse.statusCode).toBe(200)
     })
