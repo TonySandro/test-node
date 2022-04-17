@@ -20,4 +20,11 @@ describe('Quote Controller - Success case', () => {
         expect(httpResponse.statusCode).toBe(200)
     })
 
+    test('Should returns api with valid data', async () => {
+        const { sut } = makeSut()
+
+        const httpResponse = await sut.handle({})
+        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.data.Message).toEqual(new MissingParamError('quote'))
+    })
 })
