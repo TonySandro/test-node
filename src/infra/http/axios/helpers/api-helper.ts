@@ -1,16 +1,13 @@
 import { api } from "../api/api"
 
-const apiKey = "apikey=JVIEUBBVF4KCEK99"
-const functionIntra = "function=TIME_SERIES_INTRADAY"
+const key = "JVIEUBBVF4KCEK99"
+const timeSeries = "TIME_SERIES_INTRADAY"
 
 export const fetchQuote = async (quote: string) => {
     const quoteData = await api.get(
-        `query?${functionIntra}&symbol=${quote}&interval=5min&${apiKey}`
+        `query?function=${timeSeries}&symbol=${quote}&interval=5min&apikey=${key}`
     ).then(res => {
-        console.log(res)
         return res
-    }).catch(err => {
-        return err
     })
 
     return quoteData
