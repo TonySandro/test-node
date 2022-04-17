@@ -1,3 +1,5 @@
+import { ServerError } from "../../errors"
+import { success } from "../../helpers/http/http-helper"
 import { QuoteController } from "./quote-controller"
 
 interface SutTypes {
@@ -16,12 +18,10 @@ describe('Quote Controller - Success case', () => {
         const { sut } = makeSut()
         const httpResponse = await sut.handle({})
 
-        expect(httpResponse).toEqual(httpResponse)
+        expect(httpResponse.statusCode).toBe(200)
     })
 })
 
-describe('Quote Controller - Exceptions', () => {
-    test('', () => {
+// describe('Quote Controller - Exceptions', () => {
 
-    })
-})
+// })
