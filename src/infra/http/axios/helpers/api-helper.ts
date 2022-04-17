@@ -7,8 +7,8 @@ export const fetchQuote = async (quote: string) => {
     const quoteData = await api.get(
         `query?function=${timeSeries}&symbol=${quote}&interval=5min&apikey=${key}`
     ).then(res => {
-        return res
+        return res.data
     })
 
-    return quoteData
+    return quoteData["Time Series (5min)"]
 }

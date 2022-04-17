@@ -23,7 +23,7 @@ describe('Quote Controller', () => {
     test('Should returns api with valid data', async () => {
         const { sut } = makeSut()
 
-        const httpResponse = await sut.handle({})
+        const httpResponse = await sut.handle({ data: { quoteName: "" } })
         expect(httpResponse.statusCode).toBe(400)
         expect(httpResponse.data.Message).toEqual(new MissingParamError('quote'))
     })
