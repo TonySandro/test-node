@@ -1,5 +1,4 @@
-import { ServerError } from "../../errors"
-import { success } from "../../helpers/http/http-helper"
+import { MissingParamError } from "../../errors"
 import { QuoteController } from "./quote-controller"
 
 interface SutTypes {
@@ -16,12 +15,9 @@ const makeSut = (): SutTypes => {
 describe('Quote Controller - Success case', () => {
     test('Should return 200 on success', async () => {
         const { sut } = makeSut()
-        const httpResponse = await sut.handle({})
+        const httpResponse = await sut.handle({ data: "IBM" })
 
         expect(httpResponse.statusCode).toBe(200)
     })
+
 })
-
-// describe('Quote Controller - Exceptions', () => {
-
-// })
