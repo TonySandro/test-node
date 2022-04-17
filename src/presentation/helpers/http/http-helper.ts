@@ -4,7 +4,7 @@ import { HttpResponse } from "../../protocols/http"
 export const badRequest = (error: Error): HttpResponse => {
     return {
         statusCode: 400,
-        body: {
+        data: {
             Status: "Error",
             Message: error
         }
@@ -14,7 +14,7 @@ export const badRequest = (error: Error): HttpResponse => {
 export const externalServerError = (error: Error): HttpResponse => {
     return {
         statusCode: 500,
-        body: {
+        data: {
             Status: "Error",
             Message: error
         }
@@ -24,7 +24,7 @@ export const externalServerError = (error: Error): HttpResponse => {
 export const serverError = (error: Error): HttpResponse => {
     return {
         statusCode: 500,
-        body: {
+        data: {
             Status: "Error",
             Message: new ServerError(error.stack)
         }
@@ -34,9 +34,6 @@ export const serverError = (error: Error): HttpResponse => {
 export const success = (data: any): HttpResponse => {
     return {
         statusCode: 200,
-        body: {
-            transactionId: data.transactionId,
-            Status: "Confirmed"
-        }
+        data: data
     }
 }
