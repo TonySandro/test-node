@@ -50,7 +50,7 @@ describe('Quote Controller', () => {
 
         const httpResponse = await sut.handle({ data: { quoteName: "" } })
         expect(httpResponse.statusCode).toBe(400)
-        expect(httpResponse.data.Message).toEqual(new MissingParamError('quote'))
+        expect(httpResponse.data.message).toEqual(new MissingParamError('quote'))
     })
 
     test('Should return 500 if LastQuote returns throw', async () => {

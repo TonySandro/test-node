@@ -1,5 +1,5 @@
 import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
-import { fetchQuote } from "../../../infra/http/axios/helpers/api-helper"
+import { ApiHelper } from "../../../infra/http/axios/helpers/api-helper"
 import { MissingParamError } from "../../errors"
 import { badRequest, serverError, success } from "../../helpers/http/http-helper"
 import { Controller, HttpRequest, HttpResponse } from "../../protocols"
@@ -13,7 +13,8 @@ export class QuoteController implements Controller {
         try {
             const { quoteName } = httpRequest.data
 
-            const quoteData = await fetchQuote(quoteName)
+            const quoteData = await ApiHelper.fetchQuote(quoteName)
+
 
             if (!quoteData || quoteName === "") {
                 return badRequest(new MissingParamError("quote"))
