@@ -1,4 +1,4 @@
-import { QuoteController } from "../../../presentation/controllers/consultation/quote-controller";
+import { QuoteController } from "../../../presentation/controllers/quote/quote-controller";
 
 export const makeQuoteController = (): QuoteController => {
     const quoteController = new QuoteController()
