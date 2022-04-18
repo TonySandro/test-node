@@ -1,7 +1,7 @@
 import { lastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
 import { fetchQuote } from "../../../infra/http/axios/helpers/api-helper"
 import { MissingParamError } from "../../errors"
-import { badRequest, success } from "../../helpers/http/http-helper"
+import { badRequest, serverError, success } from "../../helpers/http/http-helper"
 import { Controller, HttpRequest, HttpResponse } from "../../protocols"
 
 export class QuoteController implements Controller {
@@ -24,7 +24,7 @@ export class QuoteController implements Controller {
                 name: quoteName, ...lastQuote,
             })
         } catch (error) {
-            console.log(error)
+            return serverError(error)
         }
     }
 }

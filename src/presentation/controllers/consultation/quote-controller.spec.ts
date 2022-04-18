@@ -1,5 +1,5 @@
 import { MissingParamError } from "../../errors"
-import { HttpResponse } from "../../protocols"
+import { HttpRequest, HttpResponse } from "../../protocols"
 import { QuoteController } from "./quote-controller"
 
 const makeFakeResponse = (): HttpResponse => ({
@@ -10,6 +10,8 @@ const makeFakeResponse = (): HttpResponse => ({
         pricedAt: "2022-04-14"
     }
 })
+
+const makeFakeRequest = (): HttpRequest => ({ data: { quoteName: "IBM" } })
 
 interface SutTypes {
     sut: QuoteController
@@ -25,7 +27,7 @@ const makeSut = (): SutTypes => {
 describe('Quote Controller', () => {
     test('Should return 200 on success', async () => {
         const { sut } = makeSut()
-        const httpResponse = await sut.handle({ data: { quoteName: "IBM" } })
+        const httpResponse = await sut.handle(makeFakeRequest())
 
         expect(httpResponse.statusCode).toBe(200)
     })
@@ -35,11 +37,11 @@ describe('Quote Controller', () => {
         jest.spyOn(sut, "handle").mockReturnValueOnce(
             new Promise(resolve => resolve(makeFakeResponse())))
 
-        const httpResponse = await sut.handle({ data: { quoteName: "IBM" } })
+        const httpResponse = await sut.handle(makeFakeRequest())
         expect(httpResponse).toEqual(makeFakeResponse())
     })
 
-    test('Should returns api with valid data', async () => {
+    test('Should returns 400 if no name is provided', async () => {
         const { sut } = makeSut()
 
         const httpResponse = await sut.handle({ data: { quoteName: "" } })
