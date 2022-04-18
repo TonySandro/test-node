@@ -1,5 +1,5 @@
 import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
-import { MissingParamError } from "../../errors"
+import { MissingParamError, ServerError } from "../../errors"
 import { HttpRequest, HttpResponse } from "../../protocols"
 import { QuoteController } from "./quote-controller"
 
@@ -51,5 +51,15 @@ describe('Quote Controller', () => {
         const httpResponse = await sut.handle({ data: { quoteName: "" } })
         expect(httpResponse.statusCode).toBe(400)
         expect(httpResponse.data.Message).toEqual(new MissingParamError('quote'))
+    })
+
+    test('Should return 500 if LastQuote returns throw', async () => {
+        const { sut, lastQuote } = makeSut()
+        jest.spyOn(lastQuote, "filter").mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse.data.message).toEqual(new ServerError(new Error()))
     })
 })
