@@ -5,8 +5,8 @@ export const badRequest = (error: Error): HttpResponse => {
     return {
         statusCode: 400,
         data: {
-            Status: "Error",
-            Message: error
+            status: "Error",
+            message: error
         }
     }
 }
@@ -15,8 +15,8 @@ export const externalServerError = (error: Error): HttpResponse => {
     return {
         statusCode: 500,
         data: {
-            Status: "Error",
-            Message: error
+            status: "Error",
+            message: error
         }
     }
 }
@@ -25,8 +25,8 @@ export const serverError = (error: Error): HttpResponse => {
     return {
         statusCode: 500,
         data: {
-            Status: "Error",
-            Message: new ServerError(error.stack)
+            status: "Error",
+            message: new ServerError(error.stack)
         }
     }
 }
