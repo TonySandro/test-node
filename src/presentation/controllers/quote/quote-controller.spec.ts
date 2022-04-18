@@ -1,3 +1,4 @@
+import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
 import { MissingParamError } from "../../errors"
 import { HttpRequest, HttpResponse } from "../../protocols"
 import { QuoteController } from "./quote-controller"
@@ -15,12 +16,15 @@ const makeFakeRequest = (): HttpRequest => ({ data: { quoteName: "IBM" } })
 
 interface SutTypes {
     sut: QuoteController
+    lastQuote: LastQuoteDay
 }
 
 const makeSut = (): SutTypes => {
-    const sut = new QuoteController()
+    const lastQuote = new LastQuoteDay()
+    const sut = new QuoteController(lastQuote)
     return {
         sut,
+        lastQuote
     }
 }
 
