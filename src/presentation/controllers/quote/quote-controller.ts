@@ -23,7 +23,9 @@ export class QuoteController implements Controller {
             const lastQuote = this.lastQuote.filter(quoteData)
 
             return success({
-                name: quoteName, ...lastQuote,
+                name: quoteName,
+                pricedAt: lastQuote.pricedAt,
+                lastPrice: lastQuote.lastPrice,
             })
         } catch (error) {
             return serverError(error)
