@@ -80,4 +80,19 @@ describe('Stock History Controller', () => {
         expect(httpResponse.statusCode).toBe(400)
         expect(httpResponse.data.message).toEqual(new MissingParamError('from'))
     })
+
+    test('Should return 400 if no to is provided', async () => {
+        const { sut } = makeSut()
+
+        const httpRequest = {
+            data: {
+                from: "10",
+                // to: "12"
+            }
+        }
+
+        const httpResponse = await sut.handle(httpRequest)
+        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.data.message).toEqual(new MissingParamError('to'))
+    })
 })
