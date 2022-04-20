@@ -5,11 +5,12 @@ import { badRequest, serverError, success } from "../../helpers/http/http-helper
 import { Controller, HttpRequest, HttpResponse } from "../../protocols"
 
 export class StockHistoryController implements Controller {
-    constructor() { }
+    constructor(private readonly stockHistoryMonth: StockHistoryMonth) {
+        this.stockHistoryMonth = stockHistoryMonth
+    }
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         try {
-            let stockHistoryMonth = new StockHistoryMonth()
             const requiredFields = ['from', 'to']
             const { from, to, stockName } = httpRequest.data
 
@@ -20,7 +21,7 @@ export class StockHistoryController implements Controller {
             }
 
             const allStockHistory = await ApiHelper.fetchStockHistory(stockName)
-            const validStocks = stockHistoryMonth.filter(allStockHistory, from, to)
+            const validStocks = this.stockHistoryMonth.filter(allStockHistory, from, to)
 
             return success({
                 name: stockName,
