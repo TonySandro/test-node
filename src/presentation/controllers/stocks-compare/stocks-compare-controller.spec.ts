@@ -1,7 +1,9 @@
+import { MissingParamError } from "../../errors"
 import { HttpRequest, HttpResponse } from "../../protocols"
 import { StocksCompareController } from './stocks-compare-controller'
 
-const makeFakeRequest = (): HttpRequest => ({ data: { quoteName: "IBM" } })
+const makeFakeRequest = (): HttpRequest => ({ data: { quoteName: "IBM", stocksToCompare: ['VALE3', 'IBM'] } })
+
 const makeFakeResponse = (): HttpResponse => ({
     statusCode: 200,
     data: {
@@ -47,5 +49,22 @@ describe('Stocks Compare Controller', () => {
         const httpResponse = await sut.handle(makeFakeRequest())
 
         expect(httpResponse.statusCode).toBe(200)
+    })
+
+    test('Should return 400 if no quoteName is provided', async () => {
+        const { sut } = makeSut()
+
+        const httpRequest = {
+            data: {
+                // quoteName: "IBM",
+                stocksToCompare: [
+                    'VALE3', 'IBM'
+                ]
+            }
+        }
+
+        const httpResponse = await sut.handle(httpRequest)
+        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.data.message).toEqual(new MissingParamError('quoteName'))
     })
 })
