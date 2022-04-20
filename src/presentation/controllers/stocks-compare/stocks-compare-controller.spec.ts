@@ -1,4 +1,5 @@
-import { MissingParamError } from "../../errors"
+import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
+import { MissingParamError, ServerError } from "../../errors"
 import { HttpRequest, HttpResponse } from "../../protocols"
 import { StocksCompareController } from './stocks-compare-controller'
 
@@ -34,12 +35,15 @@ const makeFakeResponse = (): HttpResponse => ({
 
 interface SutTypes {
     sut: StocksCompareController
+    lastQuote: LastQuoteDay
 }
 
 const makeSut = (): SutTypes => {
-    const sut = new StocksCompareController()
+    const lastQuote = new LastQuoteDay()
+    const sut = new StocksCompareController(lastQuote)
     return {
-        sut
+        sut,
+        lastQuote
     }
 }
 
