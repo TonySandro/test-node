@@ -67,4 +67,21 @@ describe('Stocks Compare Controller', () => {
         expect(httpResponse.statusCode).toBe(400)
         expect(httpResponse.data.message).toEqual(new MissingParamError('quoteName'))
     })
+
+    test('Should return 400 if no stocksToCompare is provided', async () => {
+        const { sut } = makeSut()
+
+        const httpRequest = {
+            data: {
+                quoteName: "IBM",
+                // stocksToCompare: [
+                //     'VALE3', 'IBM'
+                // ]
+            }
+        }
+
+        const httpResponse = await sut.handle(httpRequest)
+        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.data.message).toEqual(new MissingParamError('stocksToCompare'))
+    })
 })
