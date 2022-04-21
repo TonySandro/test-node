@@ -28,7 +28,7 @@ describe('Stock Gains Controller', () => {
         expect(httpResponse.statusCode).toBe(200)
     })
 
-    test('Should return 400 if no stockName is provided', async () => {
+    test('Should return 400 if no stockName is provide', async () => {
         const { sut } = makeSut()
 
         const httpRequest = {
@@ -43,7 +43,7 @@ describe('Stock Gains Controller', () => {
         expect(httpResponse.data.message).toEqual(new MissingParamError("stockName"))
     })
 
-    test('Should return 400 if no purchasedAt is provided', async () => {
+    test('Should return 400 if no purchasedAt is provide', async () => {
         const { sut } = makeSut()
 
         const httpRequest = {
@@ -56,5 +56,20 @@ describe('Stock Gains Controller', () => {
 
         const httpResponse = await sut.handle(httpRequest)
         expect(httpResponse.data.message).toEqual(new MissingParamError("purchasedAt"))
+    })
+
+    test('Should return 400 if no purchasedAmount is provide', async () => {
+        const { sut } = makeSut()
+
+        const httpRequest = {
+            data: {
+                stockName: 'IBM',
+                purchasedAt: '2022-04-10',
+                // purchasedAmount: '10'
+            }
+        }
+
+        const httpResponse = await sut.handle(httpRequest)
+        expect(httpResponse.data.message).toEqual(new MissingParamError("purchasedAmount"))
     })
 })
