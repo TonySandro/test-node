@@ -1,9 +1,6 @@
-import { MissingParamError } from "../../errors"
+import { MissingParamError, ServerError } from "../../errors"
 import { StockGainsController } from "./stock-gains-controller"
-
-interface SutTypes {
-    sut: StockGainsController
-}
+import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
 
 const makeFakeRequest = () => ({
     data: {
@@ -13,10 +10,17 @@ const makeFakeRequest = () => ({
     }
 })
 
+interface SutTypes {
+    sut: StockGainsController
+    lastQuote: LastQuoteDay
+}
+
 const makeSut = (): SutTypes => {
-    const sut = new StockGainsController()
+    const lastQuote = new LastQuoteDay
+    const sut = new StockGainsController(lastQuote)
     return {
-        sut
+        sut,
+        lastQuote
     }
 }
 
@@ -71,5 +75,15 @@ describe('Stock Gains Controller', () => {
 
         const httpResponse = await sut.handle(httpRequest)
         expect(httpResponse.data.message).toEqual(new MissingParamError("purchasedAmount"))
+    })
+
+    test('Should return 500 if lastQuote throws', async () => {
+        const { sut, lastQuote } = makeSut()
+        jest.spyOn(lastQuote, 'filter').mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse.data.message).toEqual(new ServerError(new Error()))
     })
 })
