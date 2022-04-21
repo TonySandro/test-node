@@ -5,7 +5,7 @@ import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 
 export class StockGainsController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-        const requiredField = ["stockName"]
+        const requiredField = ["stockName", "purchasedAt", "purchasedAmount"]
 
         for (const field of requiredField) {
             if (!httpRequest.data[field]) {
