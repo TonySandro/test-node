@@ -1,5 +1,5 @@
 export interface QuoteModel {
     name: string
-    lastPrice: string
+    lastPrice: number
     pricedAt: string
 }

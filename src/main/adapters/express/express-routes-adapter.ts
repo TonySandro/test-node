@@ -13,12 +13,13 @@ export const adaptRoute = (controller: Controller) => {
     }
 }
 
-export const adaptRouteToStocksCompare = (controller: Controller) => {
+export const adaptRouteStockHistory = (controller: Controller) => {
     return async (req: Request, res: Response) => {
         const httpRequest: HttpRequest = {
             data: {
-                quoteName: req.params.quoteName,
-                stocksToCompare: req.query
+                stockName: req.params.stockName,
+                from: req.query.from,
+                to: req.query.to
             }
         }
 
@@ -27,13 +28,12 @@ export const adaptRouteToStocksCompare = (controller: Controller) => {
     }
 }
 
-export const adaptRouteStockHistory = (controller: Controller) => {
+export const adaptRouteToStocksCompare = (controller: Controller) => {
     return async (req: Request, res: Response) => {
         const httpRequest: HttpRequest = {
             data: {
-                stockName: req.params.stockName,
-                from: req.query.from,
-                to: req.query.to
+                quoteName: req.params.quoteName,
+                stocksToCompare: req.query.stocksToCompare
             }
         }
 

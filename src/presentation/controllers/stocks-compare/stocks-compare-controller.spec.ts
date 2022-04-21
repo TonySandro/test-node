@@ -1,4 +1,5 @@
 import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
+import { StocksCompare } from "../../../data/usecases/filter/stocks-compare"
 import { MissingParamError, ServerError } from "../../errors"
 import { HttpRequest, HttpResponse } from "../../protocols"
 import { StocksCompareController } from './stocks-compare-controller'
@@ -40,7 +41,8 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
     const lastQuote = new LastQuoteDay()
-    const sut = new StocksCompareController(lastQuote)
+    const stocksCompare = new StocksCompare(lastQuote)
+    const sut = new StocksCompareController(stocksCompare)
     return {
         sut,
         lastQuote
@@ -87,5 +89,15 @@ describe('Stocks Compare Controller', () => {
         const httpResponse = await sut.handle(httpRequest)
         expect(httpResponse.statusCode).toBe(400)
         expect(httpResponse.data.message).toEqual(new MissingParamError('stocksToCompare'))
+    })
+
+    test('Should return 500 if LastQuote returns throw', async () => {
+        const { sut, lastQuote } = makeSut()
+        jest.spyOn(lastQuote, "filter").mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse.data.message).toEqual(new ServerError(new Error()))
     })
 })

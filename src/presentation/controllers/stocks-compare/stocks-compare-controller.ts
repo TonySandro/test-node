@@ -1,12 +1,14 @@
+import { StocksCompare } from "../../../data/usecases/filter/stocks-compare";
 import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day";
-import { ApiHelper } from "../../../infra/http/axios/helpers/api-helper";
 import { MissingParamError } from "../../errors";
 import { badRequest, serverError } from "../../helpers/http/http-helper";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 
 export class StocksCompareController implements Controller {
-    constructor(private readonly lastQuote: LastQuoteDay) {
-        this.lastQuote = lastQuote
+    constructor(
+        private readonly stocksCompare: StocksCompare
+    ) {
+        this.stocksCompare = stocksCompare
     }
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -20,15 +22,8 @@ export class StocksCompareController implements Controller {
                 }
             }
 
-            let lastPrices = []
             const allFields = [quoteName, ...stocksToCompare]
-            allFields.map(async (item) => {
-                let fetchLastPrices = await ApiHelper.fetchQuote(item)
-                let lastQuoteCompare = this.lastQuote.filter(fetchLastPrices, item)
-
-                lastPrices.push(lastQuoteCompare)
-            })
-
+            const lastPrices = await this.stocksCompare.filter(allFields)
 
 
             return {

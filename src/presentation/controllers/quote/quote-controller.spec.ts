@@ -7,7 +7,7 @@ const makeFakeResponse = (): HttpResponse => ({
     statusCode: 200,
     data: {
         name: "IBM",
-        lastPrice: "126.7000",
+        lastPrice: 126.7000,
         pricedAt: "2022-04-14"
     }
 })

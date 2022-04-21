@@ -8,7 +8,7 @@ export class LastQuoteDay implements iLastQuote {
 
         return {
             name: quoteName || "",
-            lastPrice: lastQuote['4. close'],
+            lastPrice: parseFloat(lastQuote['4. close']),
             pricedAt: lastDayQuotePosition
         }
     }
