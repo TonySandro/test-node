@@ -1,3 +1,4 @@
+import { MissingParamError } from "../../errors"
 import { StockGainsController } from "./stock-gains-controller"
 
 interface SutTypes {
@@ -25,5 +26,20 @@ describe('Stock Gains Controller', () => {
 
         const httpResponse = await sut.handle(makeFakeRequest())
         expect(httpResponse.statusCode).toBe(200)
+    })
+
+    test('Should return 400 if no stockName is provided', async () => {
+        const { sut } = makeSut()
+
+        const httpRequest = {
+            data: {
+                // stockName: 'IBM',
+                purchasedAt: '2022-04-10',
+                purchasedAmount: '10'
+            }
+        }
+
+        const httpResponse = await sut.handle(httpRequest)
+        expect(httpResponse.data.message).toEqual(new MissingParamError("stockName"))
     })
 })
