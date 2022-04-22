@@ -4,10 +4,15 @@ import { MissingParamError } from "../../errors";
 import { badRequest, serverError } from "../../helpers/http/http-helper";
 import { success } from "../../helpers/http/http-helper";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
+import { StockPriceAtDate } from "../../../data/usecases/filter/stock-prince-at-date";
 
 export class StockGainsController implements Controller {
-    constructor(private readonly lastQuote: LastQuoteDay) {
+    constructor(
+        private readonly lastQuote: LastQuoteDay,
+        private readonly stockPriceAtDate: StockPriceAtDate,
+    ) {
         this.lastQuote = lastQuote
+        this.stockPriceAtDate = stockPriceAtDate
     }
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -21,10 +26,21 @@ export class StockGainsController implements Controller {
                 }
             }
 
-            const allQuote = await ApiHelper.fetchQuote(stockName)
-            this.lastQuote.filter(allQuote, stockName)
+            const allQuote = await ApiHelper.fetchStockHistory(stockName)
+            const lastQuote = this.lastQuote.filter(allQuote, stockName)
 
-            return success("")
+            const quoteAtDate = this.stockPriceAtDate.filter(allQuote, purchasedAt)
+
+            const gain = {
+                name: stockName,
+                lastPrice: lastQuote.lastPrice,
+                priceAtDate: quoteAtDate.lastPrice,
+                purchasedAmount: purchasedAmount,
+                purchasedAt: purchasedAt,
+                capitalGains: (lastQuote.lastPrice * purchasedAmount) - (quoteAtDate.lastPrice * purchasedAmount),
+            }
+
+            return success(gain)
         } catch (error) {
             return serverError(error)
         }
