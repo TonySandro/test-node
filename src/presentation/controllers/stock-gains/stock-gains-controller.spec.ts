@@ -1,6 +1,7 @@
 import { MissingParamError, ServerError } from "../../errors"
 import { StockGainsController } from "./stock-gains-controller"
 import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
+import { StockPriceAtDate } from "../../../data/usecases/filter/stock-prince-at-date";
 
 const makeFakeRequest = () => ({
     data: {
@@ -13,14 +14,17 @@ const makeFakeRequest = () => ({
 interface SutTypes {
     sut: StockGainsController
     lastQuote: LastQuoteDay
+    stockPriceAtDate: StockPriceAtDate
 }
 
 const makeSut = (): SutTypes => {
-    const lastQuote = new LastQuoteDay
-    const sut = new StockGainsController(lastQuote)
+    const stockPriceAtDate = new StockPriceAtDate()
+    const lastQuote = new LastQuoteDay()
+    const sut = new StockGainsController(lastQuote, stockPriceAtDate)
     return {
         sut,
-        lastQuote
+        lastQuote,
+        stockPriceAtDate
     }
 }
 
@@ -29,6 +33,7 @@ describe('Stock Gains Controller', () => {
         const { sut } = makeSut()
 
         const httpResponse = await sut.handle(makeFakeRequest())
+        console.log(httpResponse)
         expect(httpResponse.statusCode).toBe(200)
     })
 
@@ -80,6 +85,16 @@ describe('Stock Gains Controller', () => {
     test('Should return 500 if lastQuote throws', async () => {
         const { sut, lastQuote } = makeSut()
         jest.spyOn(lastQuote, 'filter').mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse.data.message).toEqual(new ServerError(new Error()))
+    })
+
+    test('Should return 500 if stockPriceAtDate throws', async () => {
+        const { sut, stockPriceAtDate } = makeSut()
+        jest.spyOn(stockPriceAtDate, 'filter').mockImplementationOnce(() => {
             throw new Error()
         })
 
