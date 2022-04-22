@@ -47,9 +47,8 @@ npm build
 
 ### Get Preço histórico
 
-**get /stocks/:stockName/history?**
-
-ex:
+**get /stocks/:stockName/history?from=2022-04-20&to=2022-04-22**
+Query: from, to
 
 ```
 {
@@ -77,7 +76,8 @@ ex:
 
 ### Preço atual em comparação a outras ações
 
-**get /stocks/:quoteName/compare**
+**get /stocks/:quoteName/compare?stocksToCompare[]=CIR**
+Query: stocksToCompare[]
 
 ```
 {
@@ -98,7 +98,8 @@ ex:
 
 ### Get Projeção de ganhos
 
-**get /stocks/:stockName/gains?**
+**get /stocks/:stockName/gains?purchasedAt=2022-04-11&purchasedAmount=10**
+Query: purchasedAt, purchasedAmount
 
 ```
 {
