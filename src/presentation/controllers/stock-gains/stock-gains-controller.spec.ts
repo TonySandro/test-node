@@ -7,7 +7,7 @@ const makeFakeRequest = () => ({
     data: {
         stockName: 'IBM',
         purchasedAt: '2022-04-10',
-        purchasedAmount: '10'
+        purchasedAmount: 10
     }
 })
 
@@ -30,10 +30,11 @@ const makeSut = (): SutTypes => {
 
 describe('Stock Gains Controller', () => {
     test('Should return 200 if on sucess', async () => {
-        const { sut } = makeSut()
+        const { sut, stockPriceAtDate } = makeSut()
+        jest.spyOn(stockPriceAtDate, 'filter')
+            .mockReturnValueOnce({ name: '', lastPrice: 1, pricedAt: 'any' })
 
         const httpResponse = await sut.handle(makeFakeRequest())
-        console.log(httpResponse)
         expect(httpResponse.statusCode).toBe(200)
     })
 
