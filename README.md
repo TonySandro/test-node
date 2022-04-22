@@ -2,14 +2,18 @@
 
 Este teste técnico consiste em uma API para verificar o desempenho de uma ação em cinco cenários:
 
-Preço atual;
-Preço histórico
-Preço atual em comparação a outras ações;
-Projeção de ganhos com compra em data específica.
+- Preço atual;
+- Preço histórico;
+- Preço atual em comparação a outras ações;
+- Projeção de ganhos com compra em data específica.
 
 ### Jest
 
 A API utilizada no teste (www.alphavantage.co) tem um limite de 5 requests dentro de 1 minuto, e 500 por dia. Devido a essa limitação, alguns testes rodam com um response fixo na api (src/infra/http/axios/helpers/api-helper.ts)
+
+### API alphavantage
+
+É preciso inserir uma api key no arquivo env do projeto (src/main/config/env.ts)
 
 ### Rodar como desenvolvimento (porta 3001)
 
