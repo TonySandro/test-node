@@ -76,7 +76,6 @@ ex:
 **get /stocks/:quoteName/compare**
 
 ```
-ex:
 {
 "lastPrices": [
 		{
