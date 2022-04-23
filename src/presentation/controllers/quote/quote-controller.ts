@@ -1,11 +1,11 @@
-import { LastQuoteDay } from "../../../data/usecases/filter/last-quote-day"
+import { iLastQuote } from "../../../domain/usecases/last-quote/last-quote"
 import { ApiHelper } from "../../../infra/http/axios/helpers/api-helper"
 import { MissingParamError } from "../../errors"
 import { badRequest, serverError, success } from "../../helpers/http/http-helper"
 import { Controller, HttpRequest, HttpResponse } from "../../protocols"
 
 export class QuoteController implements Controller {
-    constructor(private readonly lastQuote: LastQuoteDay) {
+    constructor(private readonly lastQuote: iLastQuote) {
         this.lastQuote = lastQuote
     }
 
