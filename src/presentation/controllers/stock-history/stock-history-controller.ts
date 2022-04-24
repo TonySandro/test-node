@@ -1,11 +1,11 @@
-import { StockHistoryMonth } from "../../../data/usecases/filter/stock-history-month"
+import { iStockHistory } from "../../../domain/usecases/stock-history"
 import { ApiHelper } from "../../../infra/http/axios/helpers/api-helper"
 import { MissingParamError } from "../../errors"
 import { badRequest, serverError, success } from "../../helpers/http/http-helper"
 import { Controller, HttpRequest, HttpResponse } from "../../protocols"
 
 export class StockHistoryController implements Controller {
-    constructor(private readonly stockHistoryMonth: StockHistoryMonth) {
+    constructor(private readonly stockHistoryMonth: iStockHistory) {
         this.stockHistoryMonth = stockHistoryMonth
     }
 

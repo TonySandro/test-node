@@ -1,8 +1,8 @@
+import { iLastQuote } from "../../../domain/usecases/last-quote"
 import { ApiHelper } from "../../../infra/http/axios/helpers/api-helper"
-import { LastQuoteDay } from "./last-quote-day"
 
 export class StocksCompare {
-    constructor(private readonly lastQuote: LastQuoteDay) {
+    constructor(private readonly lastQuote: iLastQuote) {
         this.lastQuote = lastQuote
     }
 

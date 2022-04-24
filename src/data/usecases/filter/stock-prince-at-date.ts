@@ -1,4 +1,4 @@
-import { iStockPriceAtDate } from "../../../domain/usecases/stock-price-at-date/stock-price-at-date"
+import { iStockPriceAtDate } from "../../../domain/usecases/stock-price-at-date"
 import { QuoteModel } from "../../../domain/models/quote"
 
 export class StockPriceAtDate implements iStockPriceAtDate {

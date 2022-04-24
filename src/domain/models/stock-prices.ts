@@ -1,4 +1,4 @@
-export interface iStockPrices {
+export interface StockPricesModel {
     opening: number,
     low: number,
     high: number,

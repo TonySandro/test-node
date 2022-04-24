@@ -1,5 +1,5 @@
-import { iStockPrices } from "../../../domain/models/stock-prices"
-import { iStockHistoryMonth } from "../../../domain/usecases/stock-history/stock-history"
+import { StockPricesModel } from "../../../domain/models/stock-prices"
+import { iStockHistory } from "../../../domain/usecases/stock-history"
 
 function addStock(stock: any, date: string) {
     return {
@@ -16,8 +16,8 @@ function parseDateStringToNumber(date: string) {
     return parseInt(date.replaceAll('-', ''))
 }
 
-export class StockHistoryMonth implements iStockHistoryMonth {
-    filter(allQuote: any, fromDate: string, toDate: string): iStockPrices[] {
+export class StockHistoryMonth implements iStockHistory {
+    filter(allQuote: any, fromDate: string, toDate: string): StockPricesModel[] {
         let from = parseDateStringToNumber(fromDate)
         let to = parseDateStringToNumber(toDate)
 

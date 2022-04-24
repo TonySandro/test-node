@@ -1,4 +1,4 @@
-import { iLastQuote } from "../../../domain/usecases/last-quote/last-quote"
+import { iLastQuote } from "../../../domain/usecases/last-quote"
 import { ApiHelper } from "../../../infra/http/axios/helpers/api-helper"
 import { MissingParamError } from "../../errors"
 import { badRequest, serverError, success } from "../../helpers/http/http-helper"

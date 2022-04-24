@@ -1,11 +1,11 @@
-import { StocksCompare } from "../../../data/usecases/filter/stocks-compare";
+import { iStockCompare } from "../../../domain/usecases/stock-compare";
 import { MissingParamError } from "../../errors";
 import { badRequest, serverError } from "../../helpers/http/http-helper";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 
 export class StocksCompareController implements Controller {
     constructor(
-        private readonly stocksCompare: StocksCompare
+        private readonly stocksCompare: iStockCompare
     ) {
         this.stocksCompare = stocksCompare
     }

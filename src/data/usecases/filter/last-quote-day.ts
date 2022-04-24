@@ -1,5 +1,5 @@
 import { QuoteModel } from "domain/models/quote"
-import { iLastQuote } from "domain/usecases/last-quote/last-quote"
+import { iLastQuote } from "domain/usecases/last-quote"
 
 export class LastQuoteDay implements iLastQuote {
     filter(allQuote: any, quoteName?: string): QuoteModel {
