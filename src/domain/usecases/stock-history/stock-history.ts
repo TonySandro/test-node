@@ -1,5 +1,5 @@
 import { iStockPrices } from "../../../domain/models/stock-prices";
 
-export interface iStockHistoryMonth {
+export interface iStockHistory {
     filter(allQuote: any, fromDate: string, toDate: string): iStockPrices[]
 }
