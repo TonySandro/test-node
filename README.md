@@ -15,6 +15,14 @@ A API utilizada no teste (www.alphavantage.co) tem um limite de 5 requests dentr
 
 É preciso inserir uma api key no arquivo env do projeto (src/main/config/env.ts)
 
+### Back-End (./server)
+
+### Para iniciar o front e back ao mesmo tempo
+
+```
+npm run start
+```
+
 ### Rodar como desenvolvimento (porta 3001)
 
 ```
