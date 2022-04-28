@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/main/server.js",
+    "start": "concurrently \"npm run dev\" \"npm run start_client\" ",
     "dev": "sucrase-node src/main/server.ts",
+    "start_client": "cd .. && cd client && npm run start",
     "build": "rimraf dist && tsc ",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test": "jest --passWithNoTests --runInBand --no-cache",
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
+    "concurrently": "^7.1.0",
     "express": "^4.17.3",
     "swagger-ui-express": "^4.3.0",
     "ts-node-dev": "^1.1.8",
